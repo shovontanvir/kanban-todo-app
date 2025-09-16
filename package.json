@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install-frontend": "cd ./todo-front && npm install",
+    "start-frontend": "cd ./todo-front && npm run dev",
+    "install-server": "cd ./todo-server && npm install",
+    "start-server": "cd ./todo-server && npm start",
+    "install": "npm run install-frontend && npm run install-server",
+    "start": "concurrently \"npm run start-frontend\" \"npm run start-server\""
   },
   "keywords": [],
   "author": "",
