@@ -1,10 +1,19 @@
+import { Route, Routes } from "react-router"
+import { ROUTES } from "./lib/consts/routes"
+import type RouteType from "./types/routes"
 
 const App = () => {
   return (
     <>
-      <h1 className="text-4xl">Kanban Styled To Do Application</h1>
+      <Routes>
+        {
+          ROUTES.map(({id, name, path, element: Component}: RouteType) => (
+            <Route key={`${id}-${name}`} path={path} element={<Component />} />
+          ))
+        }
+      </Routes>
     </>
   )
 }
 
-export default App
+export default App;
