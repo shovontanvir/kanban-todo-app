@@ -9,7 +9,7 @@
     "install-server": "cd ./todo-server && npm install",
     "start-server": "cd ./todo-server && npm start",
     "install": "npm run install-frontend && npm run install-server",
-    "start": "concurrently \"npm run start-frontend\" \"npm run start-server\""
+    "start": "concurrently \"npm run start-server\" \"npx wait-on http://localhost:8000/ && npm run start-frontend\""
   },
   "keywords": [],
   "author": "",

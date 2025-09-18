@@ -1,0 +1,14 @@
+# ignore root node_modules and package-lock.json and .env
+.env
+node_modules
+package-lock.json
+
+# ignore server node_modules and package-lock.json and .env
+todo-server/.env
+todo-server/node_modules
+todo-server/package-lock.json
+
+# ignore frontend node_modules and package-lock.json and .env
+todo-frontend/.env
+todo-frontend/node_modules
+todo-frontend/package-lock.json

@@ -1,0 +1,9 @@
+/node_modules
+
+/todo-server/node_modules
+/todo-server/package-lock.json
+/todo-server/.env
+
+/todo-frontend/node_modules
+/todo-frontend/package-lock.json
+/todo-frontend/.env
