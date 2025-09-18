@@ -9,6 +9,6 @@ todo-server/node_modules
 todo-server/package-lock.json
 
 # ignore frontend node_modules and package-lock.json and .env
-todo-frontend/.env
-todo-frontend/node_modules
-todo-frontend/package-lock.json
+todo-front/.env
+todo-front/node_modules
+todo-front/package-lock.json
