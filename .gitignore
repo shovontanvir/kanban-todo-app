@@ -4,6 +4,6 @@
 /todo-server/package-lock.json
 /todo-server/.env
 
-/todo-frontend/node_modules
-/todo-frontend/package-lock.json
-/todo-frontend/.env
+/todo-front/node_modules
+/todo-front/package-lock.json
+/todo-front/.env
