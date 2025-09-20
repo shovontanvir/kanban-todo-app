@@ -11,15 +11,20 @@ COPY package.json .
 COPY todo-server/package.json ./todo-server/
 COPY todo-front/package.json ./todo-front/
 
+
+# COPY FE .env.example to FE .env
+COPY todo-front/.env.example ./todo-front/.env
+
+# COPY BE .env.example to BE .env
+COPY todo-server/.env.example ./todo-server/.env
+
+
 # COPY FE and BE folder to the working directory
 COPY todo-front ./todo-front
 COPY todo-server ./todo-server 
 
 # Install dependencies for both front-end and back-end using the root package.json scripts
 RUN npm run install
-
-# COPY FE .env.example to FE .env
-COPY todo-front/.env.example ./todo-front/.env
 
 # Expose port 5173 for the front-end and port 8000 for the back-end
 EXPOSE 5173 8000
