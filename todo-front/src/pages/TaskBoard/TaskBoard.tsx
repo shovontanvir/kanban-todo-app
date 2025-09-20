@@ -1,5 +1,7 @@
-import React from "react"
+import React from "react";
+
 const TaskBoard: React.FC = () => {
+  
   return (
     <div>TaskBoard</div>
   )
