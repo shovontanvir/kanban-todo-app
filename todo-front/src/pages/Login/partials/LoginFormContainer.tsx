@@ -1,12 +1,11 @@
-import React from 'react'
-import { useForm, type SubmitHandler } from "react-hook-form"
+import React from 'react';
+import { useForm, type SubmitHandler } from "react-hook-form";
+import type { LoginFormInputs } from '../../../types/login';
 
 import LoginForm from '../../../components/login-form'
+import { useLogin } from '../../../hooks/useLogin';
 
-interface FormInputs {
-  email: string
-  password: string
-}
+
 
 const LoginFormContainer: React.FC = () => {
 
@@ -14,9 +13,12 @@ const LoginFormContainer: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormInputs>();
+  } = useForm<LoginFormInputs>();
+
+  const {mutate} = useLogin();
+
   
-  const onSubmit: SubmitHandler<FormInputs> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => mutate(data);
 
   return (
     <LoginForm register={register} handleSubmit={handleSubmit} errors={errors} onSubmit={onSubmit}  />

@@ -1,4 +1,3 @@
-import React from 'react';
 export default interface RouteType {
     id: number;
     name: string;

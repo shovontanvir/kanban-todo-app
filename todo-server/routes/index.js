@@ -3,7 +3,7 @@ var router = express.Router();
 var {authMiddleware} = require('../middlewares/authMiddleware');
 
 /* GET home */
-router.get('/', authMiddleware, function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.send({ title: 'To Do Backend', message: 'Welcome to To Do Backend' });
 });
 

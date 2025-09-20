@@ -3,14 +3,12 @@ var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
-const connectDB = require('./config/db');
 
 var app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-connectDB();
 
 app.use(cors({
   origin: 'http://localhost:5173',
