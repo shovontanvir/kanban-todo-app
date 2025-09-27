@@ -1,19 +1,22 @@
-import { Route, Routes } from "react-router"
-import { ROUTES } from "./lib/consts/routes"
-import type RouteType from "./types/routes"
+import { Route, Routes } from "react-router";
+import { ROUTES } from "./lib/consts/routes.tsx";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
-    <>
-      <Routes>
-        {
-          ROUTES.map(({id, name, path, element: Component}: RouteType) => (
-            <Route key={`${id}-${name}`} path={path} element={<Component />} />
-          ))
-        }
-      </Routes>
-    </>
-  )
-}
+    <Routes>
+      {ROUTES.filter((route) => route.path === "/login").map((route) => (
+        <Route key={route.id} path={route.path} element={route.element} />
+      ))}
+      {ROUTES.filter((route) => route.path !== "/login").map((route) => (
+        <Route
+          key={route.id}
+          path={route.path}
+          element={<ProtectedRoute>{route.element}</ProtectedRoute>}
+        />
+      ))}
+    </Routes>
+  );
+};
 
 export default App;
