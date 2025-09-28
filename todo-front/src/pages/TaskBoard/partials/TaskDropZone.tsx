@@ -3,9 +3,16 @@ import TaskCard from "./TaskCard";
 
 interface TaskDropZoneProps {
   keyTitle: string;
+  tasks: Array<{
+    _id: string;
+    title: string;
+    description: string;
+    status: string;
+    deadline: string;
+  }>;
 }
 
-const TaskDropZone = ({ keyTitle }: TaskDropZoneProps) => {
+const TaskDropZone = ({ keyTitle, tasks }: TaskDropZoneProps) => {
   return (
     <div
       className="my-2 px-1 py-2 bg-[#373737] rounded-md dropzone"
@@ -15,20 +22,16 @@ const TaskDropZone = ({ keyTitle }: TaskDropZoneProps) => {
       onDrop={onDrop}
       style={{ minHeight: 100 }}
     >
-      <TaskCard
-        id="1"
-        title="Sample Task 1"
-        description="This is a sample task."
-        status={keyTitle}
-        deadline="2024-12-31"
-      />
-      <TaskCard
-        id="2"
-        title="Sample Task 2"
-        description="This is another sample task."
-        status={keyTitle}
-        deadline="2024-12-31"
-      />
+      {tasks.map((task) => (
+        <TaskCard
+          key={task._id}
+          id={task._id}
+          title={task.title}
+          description={task.description}
+          status={task.status}
+          deadline={new Date(task.deadline).toISOString().slice(0, 10)}
+        />
+      ))}
     </div>
   );
 };

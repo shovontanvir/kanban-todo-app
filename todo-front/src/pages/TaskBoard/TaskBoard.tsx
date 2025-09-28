@@ -4,8 +4,21 @@ import React from "react";
 import TaskTypeTitle from "./partials/TaskTypeTitle";
 import TaskDropZone from "./partials/TaskDropZone";
 import TaskAddDialog from "./partials/TaskAddDialog";
+import { useQuery } from "@tanstack/react-query";
+import { getApiData } from "@/apiServices/apiServices";
 
 const TaskBoard: React.FC = () => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: async () => getApiData("/tasks"),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (error) return <div>Error loading tasks</div>;
+
+  console.log("Fetched tasks:", data);
   return (
     <>
       <TaskAddDialog />
@@ -22,7 +35,18 @@ const TaskBoard: React.FC = () => {
                 keyTitle={taskType.keyTitle}
                 name={taskType.name}
               />
-              <TaskDropZone keyTitle={taskType.keyTitle} />
+              <TaskDropZone
+                keyTitle={taskType.keyTitle}
+                tasks={data?.data?.filter(
+                  (task: {
+                    _id: string;
+                    title: string;
+                    description: string;
+                    status: string;
+                    deadline: string;
+                  }) => task.status === taskType.keyTitle
+                )}
+              />
             </div>
           </div>
         ))}
