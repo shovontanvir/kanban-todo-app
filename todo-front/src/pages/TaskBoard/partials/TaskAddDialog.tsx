@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
@@ -19,14 +19,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { format } from "date-fns";
-
-type TaskFormInputs = {
-  title: string;
-  description: string;
-  deadline: Date | null;
-};
+import type { TaskFormInputs } from "@/types/taskFormInputs";
+import { useAddTask } from "@/hooks/useAddTask";
 
 const TaskAddDialog: React.FC = () => {
+  const [open, setOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -39,19 +36,19 @@ const TaskAddDialog: React.FC = () => {
     },
   });
 
-  const onSubmit = (data: TaskFormInputs) => {
-    const payload = {
-      ...data,
-      deadline: data.deadline ? data.deadline.toISOString() : null,
-    };
-
-    // will add BE logic later
-    console.log(payload);
+  const resetHandler = () => {
     reset();
+    setOpen(false);
+  };
+
+  const { mutate } = useAddTask(resetHandler);
+
+  const onSubmit = (data: TaskFormInputs) => {
+    mutate(data);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="w-auto ml-auto">
         <Button className="button">Add Task</Button>
       </DialogTrigger>
