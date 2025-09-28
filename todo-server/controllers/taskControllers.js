@@ -1,5 +1,17 @@
 const Task = require("../models/taskModel");
 
+const getAllTasks = async (req, res) => {
+  try {
+    const tasks = await Task.find({ user: req.user.id }).sort({
+      createdAt: -1,
+    });
+    res.json({ data: tasks, message: "Tasks fetched successfully" });
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 const createTask = async (req, res) => {
   try {
     const { title, description, status, deadline } = req.body;
@@ -11,4 +23,4 @@ const createTask = async (req, res) => {
   }
 };
 
-module.exports = { createTask };
+module.exports = { getAllTasks, createTask };
