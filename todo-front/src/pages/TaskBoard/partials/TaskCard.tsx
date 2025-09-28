@@ -11,6 +11,7 @@ import { TASKTYPES } from "@/lib/consts/taskTypes";
 import { handleDragStart } from "@/lib/dragAndDropUtils";
 import { Calendar, BadgeCheck } from "lucide-react";
 import TaskDetailsSheet from "./TaskDetailsSheet";
+import { isTomorrow } from "@/lib/utils";
 
 interface TaskCardProps {
   id: string;
@@ -64,9 +65,16 @@ const TaskCard: React.FC<TaskCardProps> = ({
             <BadgeCheck className="w-4 h-4" />
             {statusHandler(status)}
           </p>
-          <p className="my-1 flex items-center justify-center gap-2">
+          <p
+            className={`my-1 flex items-center justify-center gap-2 ${
+              isTomorrow(new Date(deadline ?? "")) &&
+              "text-red-600 border border-red-600 rounded-md py-1"
+            }`}
+          >
             <Calendar className="w-4 h-4" />
-            {deadline}
+            {deadline
+              ? new Date(deadline).toISOString().slice(0, 10)
+              : "No deadline"}
           </p>
         </CardDescription>
       </CardContent>

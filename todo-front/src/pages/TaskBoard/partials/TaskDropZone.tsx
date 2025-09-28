@@ -81,7 +81,7 @@ const TaskDropZone = ({ keyTitle, tasks, allTasks }: TaskDropZoneProps) => {
             title={task.title}
             description={task.description}
             status={task.status}
-            deadline={new Date(task.deadline).toISOString().slice(0, 10)}
+            deadline={task.deadline}
             draggedTaskId={draggedTaskId ?? ""}
             setDraggedTaskId={setDraggedTaskId}
           />

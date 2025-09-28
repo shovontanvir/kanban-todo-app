@@ -1,18 +1,49 @@
 import { TASKTYPES } from "@/lib/consts/taskTypes";
 import type { TaskType } from "@/types/taskType";
-import React from "react";
+import React, { useEffect } from "react";
 import TaskTypeTitle from "./partials/TaskTypeTitle";
 import TaskDropZone from "./partials/TaskDropZone";
 import TaskAddDialog from "./partials/TaskAddDialog";
 import { useQuery } from "@tanstack/react-query";
 import { getApiData } from "@/apiServices/apiServices";
+import { isTomorrow } from "@/lib/utils";
 
-const TaskBoard: React.FC = () => {
+interface TaskBoardProps {
+  checkDeadlineNearTasks: (ids: string[]) => void;
+}
+
+const TaskBoard: React.FC<TaskBoardProps> = ({ checkDeadlineNearTasks }) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => getApiData("/tasks"),
     staleTime: 5 * 60 * 1000,
   });
+
+  const deadlineNearTasks: string[] = [];
+
+  useEffect(() => {
+    data?.data
+      ?.filter(
+        (item: {
+          _id: string;
+          title: string;
+          description: string;
+          status: string;
+          deadline: string;
+        }) => item.status !== "done" && isTomorrow(new Date(item.deadline))
+      )
+      .map(
+        (item: {
+          _id: string;
+          title: string;
+          description: string;
+          status: string;
+          deadline: string;
+        }) => deadlineNearTasks.push(item._id)
+      );
+
+    checkDeadlineNearTasks(deadlineNearTasks);
+  }, [data]);
 
   if (isLoading) return <div>Loading...</div>;
 

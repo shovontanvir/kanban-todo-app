@@ -6,8 +6,30 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import React, { useState } from "react";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+type LayoutProps = {
+  children:
+    | React.ReactElement<{ checkDeadlineNearTasks?: (tasks: string[]) => void }>
+    | React.ReactElement<{
+        checkDeadlineNearTasks?: (tasks: string[]) => void;
+      }>[];
+};
+
+export default function Layout({ children }: LayoutProps) {
+  const [nearDeadlineTasks, setNearDeadlineTasks] = useState<string[]>([]);
+
+  const handleNearDeadlineTasks = (tasks: string[]) => {
+    setNearDeadlineTasks(tasks);
+  };
+
+  const childrenWithProps = React.Children.map(children, (child) =>
+    React.isValidElement(child)
+      ? React.cloneElement(child, {
+          checkDeadlineNearTasks: handleNearDeadlineTasks,
+        })
+      : child
+  );
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -20,12 +42,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className="mr-2 data-[orientation=vertical]:h-4"
             />
             <div className="ml-auto">
-              <Navbar />
+              <Navbar nearDeadlineTasks={nearDeadlineTasks} />
             </div>
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0 w-full">
-          {children}
+          {childrenWithProps}
         </div>
       </SidebarInset>
     </SidebarProvider>
