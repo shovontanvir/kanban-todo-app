@@ -23,4 +23,28 @@ const createTask = async (req, res) => {
   }
 };
 
-module.exports = { getAllTasks, createTask };
+const updateTaskById = async (req, res) => {
+  try {
+    const taskId = req.params.id;
+    const { title, description, status, dueDate } = req.body;
+
+    const updatedTask = await Task.findOneAndUpdate(
+      { _id: taskId, user: req.user._id },
+      { title, description, status, dueDate },
+      { new: true }
+    );
+
+    if (!updatedTask) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    res.status(204).json(null);
+  } catch (error) {
+    console.log(req);
+
+    console.error("Error updating task:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { getAllTasks, createTask, updateTaskById };
