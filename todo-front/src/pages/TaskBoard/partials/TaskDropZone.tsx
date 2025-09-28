@@ -1,4 +1,5 @@
 import { onDragOver, onDragLeave, onDrop } from "@/lib/dragAndDropUtils";
+import TaskCard from "./TaskCard";
 
 interface TaskDropZoneProps {
   keyTitle: string;
@@ -14,7 +15,20 @@ const TaskDropZone = ({ keyTitle }: TaskDropZoneProps) => {
       onDrop={onDrop}
       style={{ minHeight: 100 }}
     >
-      <h1 className="text-white">dropzone-{keyTitle}</h1>
+      <TaskCard
+        id="1"
+        title="Sample Task 1"
+        description="This is a sample task."
+        status={keyTitle}
+        deadline="2024-12-31"
+      />
+      <TaskCard
+        id="2"
+        title="Sample Task 2"
+        description="This is another sample task."
+        status={keyTitle}
+        deadline="2024-12-31"
+      />
     </div>
   );
 };

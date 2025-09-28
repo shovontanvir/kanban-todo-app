@@ -16,4 +16,10 @@ const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
   // will add methods later
 };
 
-export { onDragOver, onDragLeave, onDrop };
+// drag-start-handler
+const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+  e.preventDefault();
+  // will add methods later
+};
+
+export { onDragOver, onDragLeave, onDrop, handleDragStart };
