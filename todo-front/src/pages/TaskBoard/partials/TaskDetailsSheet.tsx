@@ -16,10 +16,11 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { TASKTYPES } from "@/lib/consts/taskTypes";
-import { Calendar, Pencil, Trash2 } from "lucide-react";
+import { Calendar, Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { useUpdateTask } from "@/hooks/useUpdateTask";
+import TaskDeleteConfirmationModal from "./TaskDeleteConfirmationModal";
 
 interface TaskDetailsSheetProps {
   id: string;
@@ -135,9 +136,7 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({
               >
                 <Pencil className="w-5 h-5" />
               </Button>
-              <Button size="icon" variant="ghost" aria-label="Delete">
-                <Trash2 className="w-5 h-5 text-red-500" />
-              </Button>
+              <TaskDeleteConfirmationModal taskId={id} />
             </div>
           </div>
         </SheetHeader>
