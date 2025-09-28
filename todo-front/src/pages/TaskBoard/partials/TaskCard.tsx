@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,7 +10,7 @@ import {
 import { TASKTYPES } from "@/lib/consts/taskTypes";
 import { handleDragStart } from "@/lib/dragAndDropUtils";
 import { Calendar, BadgeCheck } from "lucide-react";
-import type React from "react";
+import TaskDetailsSheet from "./TaskDetailsSheet";
 
 interface TaskCardProps {
   id: string;
@@ -27,11 +27,14 @@ const TaskCard: React.FC<TaskCardProps> = ({
   status,
   deadline,
 }) => {
+  const [selectedStatus, setSelectedStatus] = useState(status);
+
   const statusHandler = (status: string) => {
     return (
       TASKTYPES.find((type) => type.keyTitle === status)?.name || "Unknown"
     );
   };
+
   return (
     <Card
       draggable
@@ -58,10 +61,13 @@ const TaskCard: React.FC<TaskCardProps> = ({
         </CardDescription>
       </CardContent>
       <CardFooter>
-        {/* will add edit modal later */}
-        <Button variant="outline" className="w-full">
-          See Details
-        </Button>
+        <TaskDetailsSheet
+          title={title}
+          description={description}
+          deadline={deadline ?? ""}
+          selectedStatus={selectedStatus}
+          setSelectedStatus={setSelectedStatus}
+        />
       </CardFooter>
     </Card>
   );

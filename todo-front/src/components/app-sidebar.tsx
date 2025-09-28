@@ -48,7 +48,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { userName } = useAuth();
   return (
-    <Sidebar collapsible="icon" {...props} className="w-full">
+    <Sidebar collapsible="icon" {...props} className="w-44">
       <SidebarHeader></SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
