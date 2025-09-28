@@ -18,7 +18,6 @@ const TaskBoard: React.FC = () => {
 
   if (error) return <div>Error loading tasks</div>;
 
-  console.log("Fetched tasks:", data);
   return (
     <>
       <TaskAddDialog />
@@ -28,9 +27,7 @@ const TaskBoard: React.FC = () => {
             className="min-w-1/6 px-1 py-2"
             key={`column-${taskType.keyTitle}`}
           >
-            <div
-              className={`bg-[#171717] min-h-full max-h-full rounded-md p-2`}
-            >
+            <div className={`bg-[#171717] h-full max-h-full rounded-md p-2`}>
               <TaskTypeTitle
                 keyTitle={taskType.keyTitle}
                 name={taskType.name}
@@ -46,6 +43,7 @@ const TaskBoard: React.FC = () => {
                     deadline: string;
                   }) => task.status === taskType.keyTitle
                 )}
+                allTasks={data?.data}
               />
             </div>
           </div>

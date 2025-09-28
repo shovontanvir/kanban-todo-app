@@ -1,25 +1,34 @@
 // drag-over-handler
-const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+const onDragOver = (
+  e: React.DragEvent<HTMLDivElement>,
+  handleDragOver: () => void
+) => {
   e.preventDefault();
-  //   will add methods later
+  handleDragOver();
 };
 
 // drag-leave-handler
-const onDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+const onDragLeave = (
+  e: React.DragEvent<HTMLDivElement>,
+  handleDragLeave: () => void
+) => {
   e.preventDefault();
-  // will add methods later
+  handleDragLeave();
 };
 
 // drop-handler
-const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
+const onDrop = (e: React.DragEvent<HTMLDivElement>, handleDrop: () => void) => {
   e.preventDefault();
-  // will add methods later
+  handleDrop();
 };
 
 // drag-start-handler
-const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-  e.preventDefault();
-  // will add methods later
+const handleDragStart = (
+  e: React.DragEvent<HTMLDivElement>,
+  taskId: string
+) => {
+  e.dataTransfer.setData("text/plain", taskId);
+  e.dataTransfer.effectAllowed = "move";
 };
 
 export { onDragOver, onDragLeave, onDrop, handleDragStart };

@@ -18,6 +18,8 @@ interface TaskCardProps {
   description: string;
   status: string;
   deadline?: string;
+  draggedTaskId: string;
+  setDraggedTaskId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({
@@ -26,6 +28,8 @@ const TaskCard: React.FC<TaskCardProps> = ({
   description,
   status,
   deadline,
+  draggedTaskId,
+  setDraggedTaskId,
 }) => {
   const [selectedStatus, setSelectedStatus] = useState(status);
 
@@ -38,8 +42,14 @@ const TaskCard: React.FC<TaskCardProps> = ({
   return (
     <Card
       draggable
-      onDragStart={handleDragStart}
-      className="cursor-grab my-4 bg-[#171717]/60 text-center border border-white/50"
+      onDragStart={(e) => {
+        handleDragStart(e, id);
+        setDraggedTaskId(id);
+      }}
+      onDragEnd={() => setDraggedTaskId(null)}
+      className={`cursor-grab my-4 bg-[#171717]/60 text-center border border-white/50 ${
+        draggedTaskId === id ? "opacity-30" : "opacity-100"
+      }`}
       id={id}
     >
       <CardHeader className="px-2">

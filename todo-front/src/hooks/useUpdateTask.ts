@@ -12,7 +12,6 @@ export const useUpdateTask = (onSuccessHandler: () => void) => {
       console.error("Error updating task:", error);
     },
     onSuccess: () => {
-      console.log("Task updated successfully:");
       onSuccessHandler();
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
