@@ -1,8 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postApiData } from "@/apiServices/apiServices";
 import type { TaskFormInputs } from "@/types/taskFormInputs";
 
 export const useAddTask = (resetHandler: () => void) => {
+  const queryClient = useQueryClient();
+
   const { mutate } = useMutation({
     mutationFn: (taskPayload: TaskFormInputs) =>
       postApiData("/tasks", taskPayload),
@@ -12,7 +14,7 @@ export const useAddTask = (resetHandler: () => void) => {
     },
     onSuccess: () => {
       resetHandler();
-      // will add task list fetch query invalidation and refetch logic later
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
   });
   return { mutate };

@@ -22,6 +22,9 @@ const TaskDropZone = ({ keyTitle, tasks }: TaskDropZoneProps) => {
       onDrop={onDrop}
       style={{ minHeight: 100 }}
     >
+      {!tasks.length && (
+        <p className="text-center text-white italic my-5">No tasks available</p>
+      )}
       {tasks.map((task) => (
         <TaskCard
           key={task._id}

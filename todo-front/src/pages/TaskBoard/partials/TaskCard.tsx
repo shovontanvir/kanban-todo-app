@@ -62,6 +62,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
       </CardContent>
       <CardFooter>
         <TaskDetailsSheet
+          id={id}
           title={title}
           description={description}
           deadline={deadline ?? ""}
