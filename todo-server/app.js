@@ -4,6 +4,7 @@ var cors = require("cors");
 var indexRouter = require("./routes/index");
 var loginRouter = require("./routes/login");
 var taskRouter = require("./routes/tasks");
+var logoutRouter = require("./routes/logout");
 
 var app = express();
 
@@ -21,5 +22,6 @@ app.use(
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/tasks", taskRouter);
+app.use("/logout", logoutRouter);
 
 module.exports = app;

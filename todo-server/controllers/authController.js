@@ -15,7 +15,7 @@ const validateUser = async (req, res) => {
     return res.status(404).send({ message: "Incorrect Password" }); // If password does not match, return 404
 
   const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "15m",
+    expiresIn: "60m",
   }); // Generate JWT token
 
   const newToken = new Token({ userId: user._id, token: accessToken });
