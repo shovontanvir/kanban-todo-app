@@ -52,7 +52,7 @@ const LoginForm = ({
             {...register("password", { required: "Password is required" })}
           />
         </div>
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full button">
           Login
         </Button>
       </div>
