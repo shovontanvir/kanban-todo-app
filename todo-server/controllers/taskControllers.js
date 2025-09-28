@@ -47,4 +47,23 @@ const updateTaskById = async (req, res) => {
   }
 };
 
-module.exports = { getAllTasks, createTask, updateTaskById };
+const deleteTaskById = async (req, res) => {
+  try {
+    const taskId = req.params.id;
+    const deletedTask = await Task.findOneAndDelete({
+      _id: taskId,
+      user: req.user._id,
+    });
+
+    if (!deletedTask) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    res.status(204).json(null);
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { getAllTasks, createTask, updateTaskById, deleteTaskById };

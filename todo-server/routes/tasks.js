@@ -6,6 +6,7 @@ const {
   createTask,
   getAllTasks,
   updateTaskById,
+  deleteTaskById,
 } = require("../controllers/taskControllers");
 
 // GET /tasks - Get all tasks for the authenticated user
@@ -16,5 +17,8 @@ router.post("/", authMiddleware, createTask);
 
 // PUT /tasks/:id - Update a task by ID
 router.put("/:id", authMiddleware, updateTaskById);
+
+// DELETE /tasks/:id - Delete a task by ID
+router.delete("/:id", authMiddleware, deleteTaskById);
 
 module.exports = router;
