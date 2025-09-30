@@ -16,7 +16,14 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { TASKTYPES } from "@/lib/consts/taskTypes";
-import { Calendar, Pencil } from "lucide-react";
+import { Calendar as CalendarIcon, Pencil } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { useUpdateTask } from "@/hooks/useUpdateTask";
@@ -44,10 +51,12 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({
     title: string;
     description: string;
     status: string;
+    deadline: Date | null;
   }>({
     title,
     description,
     status: selectedStatus,
+    deadline: deadline ? new Date(deadline) : null,
   });
   const [open, setOpen] = useState(false);
 
@@ -58,17 +67,24 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({
       title: draft.title,
       description: draft.description,
       status: draft.status,
+      deadline: draft.deadline,
     },
     values: {
       title: draft.title,
       description: draft.description,
       status: draft.status,
+      deadline: draft.deadline,
     },
   });
 
   // When editing, sync draft
   const handleEdit = () => {
-    setDraft({ title, description, status: selectedStatus });
+    setDraft({
+      title,
+      description,
+      status: selectedStatus,
+      deadline: deadline ? new Date(deadline) : null,
+    });
     setEditMode(true);
   };
 
@@ -77,6 +93,7 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({
     title: string;
     description: string;
     status: string;
+    deadline: Date | null;
   }) => {
     setDraft(data);
     setEditMode(false);
@@ -86,9 +103,19 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({
 
   // when cancelled draft will be cleared
   const handleCancel = () => {
-    setDraft({ title, description, status: selectedStatus });
+    setDraft({
+      title,
+      description,
+      status: selectedStatus,
+      deadline: deadline ? new Date(deadline) : null,
+    });
     setEditMode(false);
-    reset({ title, description, status: selectedStatus });
+    reset({
+      title,
+      description,
+      status: selectedStatus,
+      deadline: deadline ? new Date(deadline) : null,
+    });
   };
 
   // in edit mode, update draft or set new status
@@ -96,6 +123,13 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({
     if (editMode) {
       setDraft((prev) => ({ ...prev, status: value }));
       setSelectedStatus(value);
+    }
+  };
+
+  // handle deadline change
+  const handleDeadlineChange = (date: Date | undefined) => {
+    if (editMode) {
+      setDraft((prev) => ({ ...prev, deadline: date ?? null }));
     }
   };
 
@@ -183,17 +217,36 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({
                 </Select>
               </div>
               <div className="flex items-center gap-2 mt-2">
-                <Calendar className="w-4 h-4" />
-                <span>{deadline}</span>
+                <CalendarIcon className="w-4 h-4" />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start text-left font-normal"
+                    >
+                      {draft.deadline
+                        ? format(draft.deadline, "PPP")
+                        : "Pick a date"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0 bg-black">
+                    <Calendar
+                      mode="single"
+                      required={true}
+                      selected={draft.deadline ?? undefined}
+                      onSelect={handleDeadlineChange}
+                      autoFocus
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
               <div className="flex gap-2 mt-4">
-                <Button type="submit" className="flex-1">
+                <Button type="submit" className="flex-1 bg-white text-black">
                   Save Changes
                 </Button>
                 <Button
                   type="button"
-                  variant="outline"
-                  className="flex-1"
+                  className="flex-1 border border-white text-white"
                   onClick={handleCancel}
                 >
                   Cancel
@@ -219,8 +272,12 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({
                 </Select>
               </div>
               <div className="flex items-center gap-2 mt-2">
-                <Calendar className="w-4 h-4" />
-                <span>{deadline}</span>
+                <CalendarIcon className="w-4 h-4" />
+                <span>
+                  {draft.deadline
+                    ? format(draft.deadline, "PPP")
+                    : "No deadline"}
+                </span>
               </div>
             </>
           )}

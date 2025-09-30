@@ -26,11 +26,11 @@ const createTask = async (req, res) => {
 const updateTaskById = async (req, res) => {
   try {
     const taskId = req.params.id;
-    const { title, description, status, dueDate } = req.body;
+    const { title, description, status, deadline } = req.body;
 
     const updatedTask = await Task.findOneAndUpdate(
       { _id: taskId, user: req.user._id },
-      { title, description, status, dueDate },
+      { title, description, status, deadline },
       { new: true }
     );
 
