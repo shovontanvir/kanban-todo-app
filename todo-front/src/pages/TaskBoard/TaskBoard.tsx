@@ -6,6 +6,8 @@ import TaskDropZone from "./partials/TaskDropZone";
 import TaskAddDialog from "./partials/TaskAddDialog";
 import { useCheckNearDeadlineTasks } from "@/hooks/useCheckNearDeadlineTasks";
 import { useGetTasks } from "@/hooks/useGetTasks";
+import { toast } from "sonner";
+import { useNavigate } from "react-router";
 
 interface TaskBoardProps {
   checkDeadlineNearTasks: (ids: string[]) => void;
@@ -14,11 +16,17 @@ interface TaskBoardProps {
 const TaskBoard: React.FC<TaskBoardProps> = ({ checkDeadlineNearTasks }) => {
   const { data, isLoading, error } = useGetTasks();
 
+  const navigate = useNavigate();
+
   useCheckNearDeadlineTasks(data, checkDeadlineNearTasks);
 
   if (isLoading) return <div>Loading...</div>;
 
-  if (error) return <div>Error loading tasks</div>;
+  if (error) {
+    toast.error("Error fetching tasks. Please try again.");
+    navigate("/login");
+    return null;
+  }
 
   return (
     <>

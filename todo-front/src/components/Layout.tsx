@@ -7,6 +7,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import React, { useState } from "react";
+import { Toaster } from "./ui/sonner";
 
 type LayoutProps = {
   children:
@@ -48,6 +49,7 @@ export default function Layout({ children }: LayoutProps) {
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0 w-full">
           {childrenWithProps}
+          <Toaster />
         </div>
       </SidebarInset>
     </SidebarProvider>

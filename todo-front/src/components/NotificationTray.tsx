@@ -16,7 +16,9 @@ interface NotificationTrayProps {
   nearDeadlineTasks: string[];
 }
 
-const NotificationTray = ({ nearDeadlineTasks }: NotificationTrayProps) => {
+const NotificationTray: React.FC<NotificationTrayProps> = ({
+  nearDeadlineTasks,
+}: NotificationTrayProps) => {
   const [open, setOpen] = useState(false);
 
   if (!!open) {
