@@ -1,8 +1,10 @@
 import { postApiData } from "@/apiServices/apiServices";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useCreateCategory = (onSuccessHandler: () => void) => {
+  const queryClient = useQueryClient();
+
   const { mutate } = useMutation({
     mutationFn: (payload: { name: string; keyTitle: string }) =>
       postApiData("/categories", payload),
@@ -12,6 +14,7 @@ export const useCreateCategory = (onSuccessHandler: () => void) => {
     onSuccess: () => {
       toast.success("Category created successfully!");
       onSuccessHandler();
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
   });
 

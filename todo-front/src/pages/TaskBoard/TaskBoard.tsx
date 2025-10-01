@@ -1,4 +1,3 @@
-import { TASKTYPES } from "@/lib/consts/taskTypes";
 import type { TaskType } from "@/types/taskType";
 import React from "react";
 import TaskTypeTitle from "./partials/TaskTypeTitle";
@@ -7,6 +6,7 @@ import { useCheckNearDeadlineTasks } from "@/hooks/useCheckNearDeadlineTasks";
 import { useGetTasks } from "@/hooks/useGetTasks";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
+import { useGetAllCategories } from "@/hooks/useGetAllCategories";
 
 interface TaskBoardProps {
   checkDeadlineNearTasks: (ids: string[]) => void;
@@ -15,13 +15,19 @@ interface TaskBoardProps {
 const TaskBoard: React.FC<TaskBoardProps> = ({ checkDeadlineNearTasks }) => {
   const { data, isLoading, error } = useGetTasks();
 
+  const {
+    data: categories,
+    isLoading: isCategoriesLoading,
+    isError: isCategoriesError,
+  } = useGetAllCategories();
+
   const navigate = useNavigate();
 
   useCheckNearDeadlineTasks(data, checkDeadlineNearTasks);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading || isCategoriesLoading) return <div>Loading...</div>;
 
-  if (error) {
+  if (error || isCategoriesError) {
     toast.error("Error fetching tasks. Please try again.");
     navigate("/login");
     return null;
@@ -30,11 +36,8 @@ const TaskBoard: React.FC<TaskBoardProps> = ({ checkDeadlineNearTasks }) => {
   return (
     <>
       <div className="w-full h-full overflow-x-auto hide-scrollbar flex flex-nowrap">
-        {TASKTYPES.map((taskType: TaskType) => (
-          <div
-            className="min-w-1/6 px-1 py-2"
-            key={`column-${taskType.keyTitle}`}
-          >
+        {categories?.data.map((taskType: TaskType) => (
+          <div className="min-w-1/6 px-1 py-2" key={taskType._id}>
             <div className={`bg-[#171717] h-full max-h-full rounded-md p-2`}>
               <TaskTypeTitle
                 keyTitle={taskType.keyTitle}
