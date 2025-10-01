@@ -15,7 +15,6 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { TASKTYPES } from "@/lib/consts/taskTypes";
 import { Calendar as CalendarIcon, Pencil } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -36,6 +35,7 @@ interface TaskDetailsSheetProps {
   deadline: string;
   selectedStatus: string;
   setSelectedStatus: (value: string) => void;
+  categories: Array<{ _id: string; keyTitle: string; name: string }>;
 }
 
 const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({
@@ -45,6 +45,7 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({
   deadline,
   selectedStatus,
   setSelectedStatus,
+  categories,
 }) => {
   const [editMode, setEditMode] = useState(false);
   const [draft, setDraft] = useState<{
@@ -208,7 +209,7 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-black">
-                    {TASKTYPES.map((type) => (
+                    {categories.map((type) => (
                       <SelectItem key={type.keyTitle} value={type.keyTitle}>
                         {type.name}
                       </SelectItem>
@@ -263,7 +264,7 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-black">
-                    {TASKTYPES.map((type) => (
+                    {categories.map((type) => (
                       <SelectItem key={type.keyTitle} value={type.keyTitle}>
                         {type.name}
                       </SelectItem>

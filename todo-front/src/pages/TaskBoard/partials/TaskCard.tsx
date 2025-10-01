@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { TASKTYPES } from "@/lib/consts/taskTypes";
 import { handleDragStart } from "@/lib/dragAndDropUtils";
 import { Calendar, BadgeCheck } from "lucide-react";
 import TaskDetailsSheet from "./TaskDetailsSheet";
@@ -21,6 +20,7 @@ interface TaskCardProps {
   deadline?: string;
   draggedTaskId: string;
   setDraggedTaskId: React.Dispatch<React.SetStateAction<string | null>>;
+  categories: Array<{ _id: string; keyTitle: string; name: string }>;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({
@@ -31,12 +31,13 @@ const TaskCard: React.FC<TaskCardProps> = ({
   deadline,
   draggedTaskId,
   setDraggedTaskId,
+  categories,
 }) => {
   const [selectedStatus, setSelectedStatus] = useState(status);
 
   const statusHandler = (status: string) => {
     return (
-      TASKTYPES.find((type) => type.keyTitle === status)?.name || "Unknown"
+      categories.find((type) => type.keyTitle === status)?.name || "Unknown"
     );
   };
 
@@ -86,6 +87,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
           deadline={deadline ?? ""}
           selectedStatus={selectedStatus}
           setSelectedStatus={setSelectedStatus}
+          categories={categories}
         />
       </CardFooter>
     </Card>

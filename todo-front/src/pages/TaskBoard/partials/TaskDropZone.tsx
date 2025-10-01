@@ -19,9 +19,15 @@ interface TaskDropZoneProps {
     status: string;
     deadline: string;
   }>;
+  categories: Array<{ _id: string; keyTitle: string; name: string }>;
 }
 
-const TaskDropZone = ({ keyTitle, tasks, allTasks }: TaskDropZoneProps) => {
+const TaskDropZone = ({
+  keyTitle,
+  tasks,
+  allTasks,
+  categories,
+}: TaskDropZoneProps) => {
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
 
@@ -84,6 +90,7 @@ const TaskDropZone = ({ keyTitle, tasks, allTasks }: TaskDropZoneProps) => {
             deadline={task.deadline}
             draggedTaskId={draggedTaskId ?? ""}
             setDraggedTaskId={setDraggedTaskId}
+            categories={categories}
           />
         ))}
       </div>
