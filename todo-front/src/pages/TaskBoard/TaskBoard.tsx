@@ -33,8 +33,6 @@ const TaskBoard: React.FC<TaskBoardProps> = ({ checkDeadlineNearTasks }) => {
     return null;
   }
 
-  console.log(data);
-
   return (
     <>
       <div className="w-full h-full overflow-x-auto hide-scrollbar flex flex-nowrap">
