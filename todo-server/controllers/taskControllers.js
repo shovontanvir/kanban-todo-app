@@ -1,11 +1,14 @@
 const Task = require("../models/taskModel");
+const mongoose = require("mongoose");
 
 const getAllTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({ user: req.user.id }).sort({
+    const tasks = await Task.find({
+      user: req.user._id,
+    }).sort({
       createdAt: -1,
     });
-    res.json({ data: tasks, message: "Tasks fetched successfully" });
+    res.json({ data: tasks || [], message: "Tasks fetched successfully" });
   } catch (error) {
     console.error("Error fetching tasks:", error);
     res.status(500).json({ message: "Server error" });
@@ -15,7 +18,14 @@ const getAllTasks = async (req, res) => {
 const createTask = async (req, res) => {
   try {
     const { title, description, status, deadline } = req.body;
-    const task = new Task({ title, description, status, deadline });
+
+    const task = new Task({
+      title,
+      description,
+      status,
+      deadline,
+      user: req.user._id,
+    });
     await task.save();
     res.status(201).json({ data: task, message: "Task created successfully" });
   } catch (err) {

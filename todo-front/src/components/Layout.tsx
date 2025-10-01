@@ -13,17 +13,38 @@ import CategoryAddDialog from "./CategoryAddDialogue";
 
 type LayoutProps = {
   children:
-    | React.ReactElement<{ checkDeadlineNearTasks?: (tasks: string[]) => void }>
     | React.ReactElement<{
-        checkDeadlineNearTasks?: (tasks: string[]) => void;
+        checkDeadlineNearTasks?: (
+          tasks: string[],
+          categoryList?: Array<{ name: string; keyTitle: string }>
+        ) => void;
+      }>
+    | React.ReactElement<{
+        checkDeadlineNearTasks?: (
+          tasks: string[],
+          categoryList?: Array<{ name: string; keyTitle: string }>
+        ) => void;
       }>[];
 };
 
 export default function Layout({ children }: LayoutProps) {
   const [nearDeadlineTasks, setNearDeadlineTasks] = useState<string[]>([]);
+  const [categories, setCategories] = useState<
+    Array<{
+      name: string;
+      keyTitle: string;
+    }>
+  >([]);
 
-  const handleNearDeadlineTasks = (tasks: string[]) => {
+  const handleNearDeadlineTasks = (
+    tasks: string[],
+    categoryList?: Array<{
+      name: string;
+      keyTitle: string;
+    }>
+  ) => {
     setNearDeadlineTasks(tasks);
+    setCategories(categoryList || []);
   };
 
   const childrenWithProps = React.Children.map(children, (child) =>
@@ -52,7 +73,7 @@ export default function Layout({ children }: LayoutProps) {
         <div className="flex flex-col gap-4 p-5 w-full">
           <div className="flex justify-end items-center w-full">
             <CategoryAddDialog />
-            <TaskAddDialog />
+            <TaskAddDialog categories={categories || []} />
           </div>
           {childrenWithProps}
           <Toaster />

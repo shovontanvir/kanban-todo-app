@@ -9,16 +9,17 @@ const taskSchema = new mongoose.Schema(
     },
     description: {
       type: String,
+      required: true,
       trim: true,
     },
     status: {
       type: String,
-      enum: ["draft", "to-do", "in-progress", "peer-review", "blocked", "done"],
-      default: "draft",
+      required: true,
     },
     deadline: {
       type: Date,
     },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true }
 );

@@ -18,11 +18,25 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { format } from "date-fns";
 import type { TaskFormInputs } from "@/types/taskFormInputs";
 import { useAddTask } from "@/hooks/useAddTask";
 
-const TaskAddDialog: React.FC = () => {
+type TaskAddDialogProps = {
+  categories: Array<{
+    name: string;
+    keyTitle: string;
+  }>;
+};
+
+const TaskAddDialog: React.FC<TaskAddDialogProps> = ({ categories }) => {
   const [open, setOpen] = useState(false);
   const {
     register,
@@ -86,6 +100,35 @@ const TaskAddDialog: React.FC = () => {
             {errors.description && (
               <span className="text-red-500 text-xs">
                 {errors.description.message}
+              </span>
+            )}
+          </div>
+          <div>
+            <Label htmlFor="task-category" className="mb-2">
+              Category
+            </Label>
+            <Controller
+              control={control}
+              name="status"
+              rules={{ required: "Category is required" }}
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger className="w-full" id="task-category">
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-black border border-white">
+                    {categories.map((cat) => (
+                      <SelectItem key={cat.keyTitle} value={cat.keyTitle}>
+                        {cat.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            {errors.status && (
+              <span className="text-red-500 text-xs">
+                {errors.status.message}
               </span>
             )}
           </div>

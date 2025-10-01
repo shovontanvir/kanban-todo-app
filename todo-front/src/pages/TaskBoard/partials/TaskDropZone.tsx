@@ -69,7 +69,7 @@ const TaskDropZone = ({
         </div>
       )}
       <div
-        className="my-2 px-1 py-2 bg-[#373737] rounded-md dropzone min-h-full"
+        className="my-2 px-1 py-2 bg-[#373737] rounded-md dropzone min-h-[200px]"
         id={`dropzone-${keyTitle}`}
         onDragOver={(e) => onDragOver(e, () => setIsDragOver(true))}
         onDragLeave={(e) => onDragLeave(e, () => setIsDragOver(false))}

@@ -1,11 +1,15 @@
-const Mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-const categorySchema = new Mongoose.Schema(
+const categorySchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
     keyTitle: { type: String, required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true }
 );
 
-module.exports = Mongoose.model("Category", categorySchema, "categories");
+categorySchema.index({ name: 1, user: 1 }, { unique: true });
+categorySchema.index({ keyTitle: 1, user: 1 }, { unique: true });
+
+module.exports = mongoose.model("Category", categorySchema, "categories");

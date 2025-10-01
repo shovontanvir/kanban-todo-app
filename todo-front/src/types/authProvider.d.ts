@@ -2,7 +2,8 @@ export interface AuthProviderType {
   isAuthenticated: boolean;
   userId: string | null;
   userName: string | "";
-  handleLogin: (id: string, name: string) => void;
+  userEmail: string | "";
+  handleLogin: (id: string, name: string, email: string) => void;
   handleLogout: () => void;
 }
 

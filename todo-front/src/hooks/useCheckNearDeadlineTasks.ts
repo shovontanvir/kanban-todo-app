@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { isTomorrow } from "@/lib/utils";
 import { useEffect } from "react";
 
@@ -15,7 +16,8 @@ type DataWithTasks = {
 
 export const useCheckNearDeadlineTasks = (
   data: DataWithTasks,
-  callbackFn: (arg0: string[]) => void
+  categories: any,
+  callbackFn: (arg0: string[], arg1: any) => void
 ) => {
   useEffect(() => {
     const deadlineNearTasks: string[] = [];
@@ -39,6 +41,6 @@ export const useCheckNearDeadlineTasks = (
         }) => deadlineNearTasks.push(item.title)
       );
 
-    callbackFn(deadlineNearTasks);
-  }, [data]);
+    callbackFn(deadlineNearTasks, categories?.data);
+  }, [data, categories]);
 };
