@@ -5,4 +5,5 @@ export default interface RouteType {
   name: string;
   path: string;
   element: JSX.Element;
+  isProtected: boolean;
 }

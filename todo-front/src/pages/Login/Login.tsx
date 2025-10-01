@@ -1,5 +1,6 @@
-import React from "react"
-import LoginFormContainer from "./partials/LoginFormContainer"
+import React from "react";
+import LoginFormContainer from "./partials/LoginFormContainer";
+import { Toaster } from "@/components/ui/sonner";
 
 const Login: React.FC = () => {
   return (
@@ -18,8 +19,9 @@ const Login: React.FC = () => {
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
       </div>
+      <Toaster />
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

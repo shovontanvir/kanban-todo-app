@@ -11,7 +11,9 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Eye, EyeOff } from "lucide-react";
-import bcrypt from "bcryptjs";
+import { useSignUp } from "@/hooks/useSignUp";
+import { useNavigate } from "react-router";
+import { Toaster } from "@/components/ui/sonner";
 
 interface SignUpFormValues {
   name: string;
@@ -36,17 +38,18 @@ const SignUpForm: React.FC = () => {
     },
   });
 
+  const { mutate } = useSignUp(() => reset());
+
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data: SignUpFormValues) => {
-    const hashedPassword = await bcrypt.hash(data.password, 10);
-
     const { confirmPassword, ...payload } = {
       ...data,
-      password: hashedPassword,
+      password: data.password,
     };
-    console.log(payload);
-    reset();
+    mutate(payload);
   };
 
   return (
@@ -133,7 +136,17 @@ const SignUpForm: React.FC = () => {
             Sign Up
           </Button>
         </CardFooter>
+        <div className="text-center text-sm">
+          Already have an account?{" "}
+          <button
+            className="underline underline-offset-4 cursor-pointer"
+            onClick={() => navigate("/login")}
+          >
+            Log in
+          </button>
+        </div>
       </form>
+      <Toaster />
     </Card>
   );
 };

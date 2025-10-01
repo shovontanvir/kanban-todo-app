@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useNavigate } from "react-router";
 
 interface LoginFormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   handleSubmit: (
@@ -12,7 +13,6 @@ interface LoginFormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   errors?: any;
   onSubmit: (data: any) => void;
 }
-
 const LoginForm = ({
   className,
   handleSubmit,
@@ -20,6 +20,8 @@ const LoginForm = ({
   onSubmit,
   ...props
 }: LoginFormProps) => {
+  const navigate = useNavigate();
+
   return (
     <form
       className={cn("flex flex-col gap-6", className)}
@@ -58,9 +60,12 @@ const LoginForm = ({
       </div>
       <div className="text-center text-sm">
         Don&apos;t have an account?{" "}
-        <a href="/signup" className="underline underline-offset-4">
+        <button
+          className="underline underline-offset-4 cursor-pointer"
+          onClick={() => navigate("/signup")}
+        >
           Sign up
-        </a>
+        </button>
       </div>
     </form>
   );
