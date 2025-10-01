@@ -5,6 +5,7 @@ var indexRouter = require("./routes/index");
 var loginRouter = require("./routes/login");
 var taskRouter = require("./routes/tasks");
 var logoutRouter = require("./routes/logout");
+var categoriesRouter = require("./routes/categories");
 
 var app = express();
 
@@ -23,5 +24,6 @@ app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/tasks", taskRouter);
 app.use("/logout", logoutRouter);
+app.use("/categories", categoriesRouter);
 
 module.exports = app;
