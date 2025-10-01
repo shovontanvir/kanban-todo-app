@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/sidebar";
 import React, { useState } from "react";
 import { Toaster } from "./ui/sonner";
+import TaskAddDialog from "@/components/TaskAddDialog";
+import CategoryAddDialog from "./CategoryAddDialogue";
 
 type LayoutProps = {
   children:
@@ -47,7 +49,11 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0 w-full">
+        <div className="flex flex-col gap-4 p-5 w-full">
+          <div className="flex justify-end items-center w-full">
+            <CategoryAddDialog />
+            <TaskAddDialog />
+          </div>
           {childrenWithProps}
           <Toaster />
         </div>

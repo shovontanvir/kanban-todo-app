@@ -49,7 +49,7 @@ const TaskAddDialog: React.FC = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild className="w-auto ml-auto">
+      <DialogTrigger asChild className="w-auto ml-5">
         <Button className="button">Add Task</Button>
       </DialogTrigger>
       <DialogContent className="bg-black backdrop-blur-md border border-white/20 space-y-4">

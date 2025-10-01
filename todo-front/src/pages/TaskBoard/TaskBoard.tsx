@@ -3,7 +3,6 @@ import type { TaskType } from "@/types/taskType";
 import React from "react";
 import TaskTypeTitle from "./partials/TaskTypeTitle";
 import TaskDropZone from "./partials/TaskDropZone";
-import TaskAddDialog from "./partials/TaskAddDialog";
 import { useCheckNearDeadlineTasks } from "@/hooks/useCheckNearDeadlineTasks";
 import { useGetTasks } from "@/hooks/useGetTasks";
 import { toast } from "sonner";
@@ -30,7 +29,6 @@ const TaskBoard: React.FC<TaskBoardProps> = ({ checkDeadlineNearTasks }) => {
 
   return (
     <>
-      <TaskAddDialog />
       <div className="w-full h-full overflow-x-auto hide-scrollbar flex flex-nowrap">
         {TASKTYPES.map((taskType: TaskType) => (
           <div
