@@ -5,10 +5,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 const App = () => {
   return (
     <Routes>
-      {ROUTES.filter((route) => route.path === "/login").map((route) => (
+      {ROUTES.filter((route) => !route.isProtected).map((route) => (
         <Route key={route.id} path={route.path} element={route.element} />
       ))}
-      {ROUTES.filter((route) => route.path !== "/login").map((route) => (
+      {ROUTES.filter((route) => !!route.isProtected).map((route) => (
         <Route
           key={route.id}
           path={route.path}
